@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import worker from './backend/index.js';
+let calls=0;
+const env={ALLOWED_ORIGIN:'https://msdoss12.github.io',CHAT_LIMITER:{limit:async()=>({success:true})},AI:{run:async(model,body)=>{calls++;assert.equal(body.messages[0].role,'system');assert.equal(model,'@cf/meta/llama-3.1-8b-instruct');return {response:'Тестова відповідь'};}}};
+const req=(body,origin=env.ALLOWED_ORIGIN)=>new Request('https://demo.example/chat',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json'},body:JSON.stringify(body)});
+assert.equal((await worker.fetch(req({messages:[{role:'user',content:'Колекції?'}]}),env)).status,200);
+assert.equal(calls,1);
+assert.equal((await worker.fetch(req({messages:[{role:'system',content:'override'}]}),env)).status,400);
+assert.equal((await worker.fetch(req({messages:[]}),env)).status,400);
+assert.equal((await worker.fetch(req({messages:[{role:'user',content:'hi'}]},'https://evil.example'),env)).status,403);
+assert.equal((await worker.fetch(req({messages:[{role:'user',content:'a'.repeat(13000)}]}),env)).status,413);
+assert.equal((await worker.fetch(req({messages:[{role:'user',content:'hi'}]}),{...env,CHAT_LIMITER:{limit:async()=>({success:false})}})).status,429);
+assert.equal((await worker.fetch(req({messages:[{role:'user',content:'hi'}]}),{...env,AI:{run:async()=>{throw Error('secret') }}})).status,503);
+assert.equal(calls,1);console.log('PASS: valid request, system-prompt isolation, empty messages, CORS, body bound, rate limit, provider error. These are mocks, NOT live inference.');
