@@ -1,5 +1,5 @@
-import { sources } from './knowledge.js';
-import { API_ENDPOINT } from './config.js';
+import { sources } from './knowledge.js?v=online-2';
+import { API_ENDPOINT } from './config.js?v=online-2';
 const $ = id => document.getElementById(id);
 let started = false, busy = false, controller = null;
 let history = [];
