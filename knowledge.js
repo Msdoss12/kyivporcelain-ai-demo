@@ -6,7 +6,7 @@ KNOWLEDGE (public website, checked 2026-11-16):
 - IMPORTANT CONFLICT: FAQ and Delivery pages disagree about delivery cost, free-delivery eligibility and pickup. Do NOT quote any price, threshold, or promise free delivery/pickup. Explain that the published conditions differ and the team should confirm current terms for the exact product and destination.
 - FAQ: for damaged parcels or returns, contact kyivporcelain@gmail.com with the order details. This demo cannot resolve claims or promise refunds.
 - Collaboration: offline retailers may display products on their own shelves or supplied branded stands, with promotional material support. Online sales collaboration is also discussed. Commercial terms require company confirmation. Contact kyivporcelain@gmail.com.
-- No live catalog, inventory, orders or CRM are connected. This is a small local model, so answers can be wrong and must be verified. Never pretend to know unavailable information.`;
+- No live catalog, inventory, orders or CRM are connected. AI answers can be wrong and must be verified. Never pretend to know unavailable information.`;
 export const sources = [
  ['Запитання та відповіді','https://kyivporcelain.com/ua/questions/'],
  ['Доставка та умови','https://kyivporcelain.com/ua/delivery/'],
