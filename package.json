@@ -1,0 +1,1 @@
+{"name":"kyivporcelain-ai-demo","private":true,"type":"module","scripts":{"check":"node --check app.js && node --check knowledge.js && node --check worker.js","serve":"python3 -m http.server 8080"}}
