@@ -1,2 +1,2 @@
-// Set only a deployed public backend URL, never credentials. Empty uses local WebLLM.
-export const API_ENDPOINT = '';
+// Public API endpoint; no credentials are stored in the browser.
+export const API_ENDPOINT = 'https://kyivporcelain-ai-demo-api.vitya-4678kemp.workers.dev/chat';
