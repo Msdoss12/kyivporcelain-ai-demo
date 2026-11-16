@@ -14,19 +14,17 @@ No Cloudflare account, backend, repository or Pages site was provisioned by buil
 
 Cloudflare Workers AI has a documented free daily allocation; limits can change and the demo returns an explicit error when unavailable. Per-IP rate limiting reduces casual abuse but is not authentication or a total budget cap. Origin checks are browser protection only, not bot authentication. Keep the account on the free plan, monitor allowance, disable public access after evaluation; add Turnstile or invite-based protection for a long-running deployment. Do not log chat contents. Frontend clearly discloses messages go to Cloudflare in this mode.
 
-## Keyless local-model fallback
+## Online only
 
-Leave `API_ENDPOINT` empty. The user explicitly starts a WebLLM Qwen2.5 1.5B model in their browser. Model download is approximately 1 GB, GPU memory requirement approximately 2 GB. WebGPU is required; performance and Ukrainian accuracy depend on the device. This is a fallback, not an ideal first client experience. It incurs no AI API charges. It is genuine language-model inference, not canned responses. Model/CDN hosting receives normal network information; chat contents stay in the browser. WebLLM caches model assets; reset clears conversation, not the downloaded cache.
-
-External dependencies: `@mlc-ai/web-llm@0.2.88` via esm.run, model weights from Hugging Face, compiled model libraries from the WebLLM distribution. Local mode requires these providers to be reachable.
+All AI inference runs on the configured backend. There is no model download, browser GPU requirement, WebLLM runtime or local fallback. If `API_ENDPOINT` is empty or invalid, the interface explicitly says the online service is not connected. If the backend fails, the interface reports the error and restores the question for retry; it never substitutes canned answers. `worker.js` is an unused compatibility tombstone and may be deleted.
 
 ## Local checks
 
 `npm run check`
 `node backend.test.js`
-`python3 -m http.server 8080` then open localhost:8080 in a WebGPU-capable browser.
+`python3 -m http.server 8080` then open localhost:8080 in a browser.
 
-Backend tests mock AI; they verify validation and error handling, not model output. No paid inference was performed. Static syntax checks passed. Full graphical, browser GPU and real provider checks still required.
+Backend tests mock AI; they verify validation and error handling, not model output. No paid inference was performed. Static syntax checks passed. Full graphical, browser and real provider checks still required.
 
 ## Knowledge and attribution
 
@@ -35,11 +33,9 @@ The short paraphrased knowledge snapshot in `knowledge.js` uses official public 
 - https://kyivporcelain.com/ua/delivery/
 - https://kyivporcelain.com/ua/spivpratsya/
 
-The FAQ and delivery pages conflict on shipping prices, free shipping and pickup. The prompt explicitly withholds promises and directs these to company confirmation. There is no live catalog or inventory integration. Prompt instructions reduce hallucinations but cannot guarantee factuality, especially in the smaller local model. Names are used to identify the proposal; no logos, product photos or copied page design are included.
+The FAQ and delivery pages conflict on shipping prices, free shipping and pickup. The prompt explicitly withholds promises and directs these to company confirmation. There is no live catalog or inventory integration. Prompt instructions reduce hallucinations but cannot guarantee factuality. Names are used to identify the proposal; no logos, product photos or copied page design are included.
 
 ## Technical sources
-- https://webllm.mlc.ai/docs/
-- https://github.com/mlc-ai/web-llm/blob/main/src/config.ts
 - https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
 - https://developers.cloudflare.com/workers-ai/configuration/bindings/
 - https://developers.cloudflare.com/workers-ai/platform/pricing/
